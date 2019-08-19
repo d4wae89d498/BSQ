@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   header.h                                         .::    .:/ .      .::   */
+/*   header.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: hmarlin <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/08/19 19:22:26 by hmarlin      #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/19 19:37:40 by hmarlin     ###    #+. /#+    ###.fr     */
+/*   Created: 2019/08/19 19:25:31 by hmarlin      #+#   ##    ##    #+#       */
+/*   Updated: 2019/08/19 19:33:13 by hmarlin     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#include <unistd.h>
 
-char *toto = "toto";
+void	ft_putstr(char *str)
+{
+	unsigned int i;
 
-void	ft_putstr(char *str);
-
-#endif
+	i = 0;
+	while (str[i])
+	{
+		write(1, &str[i], 1);
+		i += 1;
+	}
+}

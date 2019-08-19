@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   header.h                                         .::    .:/ .      .::   */
+/*   main.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: hmarlin <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/08/19 19:22:26 by hmarlin      #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/19 19:37:40 by hmarlin     ###    #+. /#+    ###.fr     */
+/*   Created: 2019/08/19 19:27:02 by hmarlin      #+#   ##    ##    #+#       */
+/*   Updated: 2019/08/19 19:59:05 by hmarlin     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#include "struct.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-char *toto = "toto";
+void	show_b(super *totostruct)
+{
+	printf("%i %i", totostruct->a, totostruct->b);
+}
 
-void	ft_putstr(char *str);
+int		main()
+{
+	super	*toto;
 
-#endif
+	toto = malloc(sizeof(super));
+
+	toto->a = 42;
+	toto->b = 55;
+
+	show_b(toto);
+	free(toto);
+}

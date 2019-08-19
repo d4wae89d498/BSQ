@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   header.h                                         .::    .:/ .      .::   */
+/*   toto.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: hmarlin <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/08/19 19:22:26 by hmarlin      #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/19 19:37:40 by hmarlin     ###    #+. /#+    ###.fr     */
+/*   Created: 2019/08/19 19:39:30 by hmarlin      #+#   ##    ##    #+#       */
+/*   Updated: 2019/08/19 19:40:31 by hmarlin     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#include "header.h"
 
-char *toto = "toto";
-
-void	ft_putstr(char *str);
-
-#endif
+void	totoi()
+{
+	ft_putstr("hello zob");
+}
