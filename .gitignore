@@ -1,4 +1,5 @@
 *.out
-*.out*
 *.swp
 *.swap
+*.gch
+*.dynSYM
