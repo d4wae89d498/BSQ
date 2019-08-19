@@ -6,13 +6,14 @@
 /*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/19 15:36:15 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/19 15:36:37 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/19 16:08:08 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 void	ft_putstr(char *str)
 {
@@ -42,4 +43,17 @@ char	*ft_read_input(char delimiter, int fd)
 	input_buffer = realloc(input_buffer, (input_len + 1) * sizeof(char));
 	*(input_buffer + input_len) = '\0';
 	return (input_buffer);
+}
+
+char	*ft_read_file(char *file_path)
+{
+	int		fd;
+
+	fd = open(file_path, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	else
+	{
+		return (ft_read_input(-1, fd));
+	}
 }

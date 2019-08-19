@@ -6,7 +6,7 @@
 /*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/19 15:36:46 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/19 15:37:46 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/19 15:55:01 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,4 +16,6 @@
 void	ft_putstr(char *str);
 
 char	*ft_read_input(char delimiter, int fd);
+
+char	*ft_read_file(char *file_path);
 #endif
