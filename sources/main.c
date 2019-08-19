@@ -6,7 +6,7 @@
 /*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/19 13:25:24 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/19 16:07:53 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/19 16:15:30 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,6 @@
 #include "./../includes/stdio.h"
 
 char	*g_default_map = "./maps/00.txt";
-
 
 int		parse_map(char *map_path)
 {
@@ -39,10 +38,11 @@ int		parse_map(char *map_path)
 	}
 	free(map_path);
 }
+
 int		main(int argc, char **argv)
 {
 	char	*map_path;
-	int 	success;
+	int		success;
 
 	map_path = 0;
 	if (argc == 1)
@@ -50,7 +50,7 @@ int		main(int argc, char **argv)
 		write(1, "Please enter your map path [press x for default: ", 49);
 		ft_putstr(g_default_map);
 		write(1, "]\n", 2);
-		map_path = ft_read_input(10, STDIN_FILENO);	
+		map_path = ft_read_input(10, STDIN_FILENO);
 		if (*map_path == 'x' && map_path[1] == '\0')
 		{
 			free(map_path);
