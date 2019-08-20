@@ -6,7 +6,7 @@
 /*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/19 15:36:15 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/20 19:11:05 by hmarlin     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/20 19:17:51 by hmarlin     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,12 +15,12 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-void	ft_putchar(c)
+void	ft_putchar(char c)
 {
 	write(1, &c, 1);
 }
 
-void	ft_putstr(str)
+void	ft_putstr(char *str)
 {
 	int s;
 
