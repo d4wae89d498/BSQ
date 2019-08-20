@@ -6,7 +6,7 @@
 /*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/19 13:25:24 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/19 16:15:30 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/20 18:34:49 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,17 +15,22 @@
 #include <stdlib.h>
 #include "./../includes/string.h"
 #include "./../includes/stdio.h"
+#include "./../includes/map.h"
 
 char	*g_default_map = "./maps/00.txt";
 
 int		parse_map(char *map_path)
 {
-	char	*map_file_buffer;
+	char		*map_file_buffer;
+	t_map		map;
+	t_sqaure	*biggest_square;
 
 	map_file_buffer = ft_read_file(map_path);
 	if (map_file_buffer > 0)
 	{
-		ft_putstr(map_file_buffer);
+		map = ft_fill_map(map_file_buffer);
+		biggest_square = ft_find_biggest_square(&map);
+		ft_display_map(&map, biggest_square);
 		free(map_file_buffer);
 		return (0);
 	}
