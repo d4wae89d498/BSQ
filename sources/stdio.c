@@ -6,7 +6,7 @@
 /*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/19 15:36:15 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/20 19:17:51 by hmarlin     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/20 19:31:12 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,7 +27,7 @@ void	ft_putstr(char *str)
 	s = 0;
 	while (str[s] != '\0')
 	{
-		ft_putchar(s);
+		ft_putchar(str[s]);
 		s++;
 	}
 }
