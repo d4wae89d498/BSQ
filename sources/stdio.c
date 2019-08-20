@@ -6,7 +6,7 @@
 /*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/19 15:36:15 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/20 18:35:26 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/20 19:11:05 by hmarlin     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,6 +14,24 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
+
+void	ft_putchar(c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_putstr(str)
+{
+	int s;
+
+	s = 0;
+	while (str[s] != '\0')
+	{
+		ft_putchar(s);
+		s++;
+	}
+}
+
 
 char	*ft_read_input(char delimiter, int fd)
 {
