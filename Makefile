@@ -1,10 +1,34 @@
-main:
-	make fclean && make norme && cc -Werror -Wall -Wextra includes/*.h  sources/*.c  && mv a.out bsq && make run
+# **************************************************************************** #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: fdumas <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2019/08/20 16:13:12 by fdumas       #+#   ##    ##    #+#        #
+#    Updated: 2019/08/20 17:34:06 by fdumas      ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
+# **************************************************************************** #
+
+CC&FLAGS = cc -Wall -Wextra -Werror
+N&FLAGS = norminette -R CheckForbiddenSourceHeader
+EXEC = bsq
+OEXEC = a.out
+M = make
+R&FLAGS = rm -rf
+
+all:
+	$(M) fclean && $(M) norme && $(CC&FLAGS) includes/*.h  sources/*.c  && mv $(OEXEC) $(EXEC) && $(M) run
+
 sanitize:
-	cc -Werror -Wall -Wextra -g3 -fsanitize=address includes/*.h  sources/*.c && mv a.out bsq
+	$(CC&FLAGS) -g3 -fsanitize=address includes/*.h  sources/*.c && mv $(OEXEC) $(EXEC)
+
 fclean:
-	rm -rf *.out && rm -rf includes/*.gch  && rm -rf a.out.dSYM/
+	$(R&FLAGS) *.out && $(R&FLAGS) includes/*.gch  && $(R&FLAGS) a.out.dSYM/
+
 norme:
-	norminette -R CheckForbiddenSourceHeader includes/ sources/
+	$(N&FLAGS) includes/ sources/
+
 run:
-	./bsq
+	./$(EXEC)
