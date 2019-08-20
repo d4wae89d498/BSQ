@@ -6,7 +6,7 @@
 /*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/20 18:00:01 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/20 18:34:44 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/20 20:13:57 by hmarlin     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,11 +16,11 @@
 
 typedef struct	s_square
 {
-	int		x; 		// position colone du caree 
-	int		y;		// position ligne du caree
-	int		l;		// longuerre / largeure du caree
+	int			x;
+	int			y;
+	int			l;
 }				t_square;
 
-t_square	*ft_create_square(int x, int y, int l);
+t_square		*ft_create_square(int x, int y, int l);
 
 #endif

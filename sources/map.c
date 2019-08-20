@@ -6,7 +6,7 @@
 /*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/20 18:37:14 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/20 19:09:27 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/20 20:23:23 by hmarlin     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,7 @@ t_map		*ft_fill_map(char *map_buffer)
 
 t_square	*ft_find_biggest_square(t_map *map)
 {
-	t_square	*biggest_square;		
+	t_square	*biggest_square;
 
 	(void)biggest_square;
 	(void)map;
