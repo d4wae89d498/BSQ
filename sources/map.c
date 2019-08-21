@@ -63,61 +63,45 @@ int		ft_case(char c, t_map *map)
 		return (c == map->empty);
 }
 
-int		reccursive_sqr_findr(short **cells, int begin_x, int begin_y, int x, int y, t_map *map, int deep)
+int		reccursive_sqr_findr(short **cells, int begin_x, int begin_y, int x, int y, t_map *map, int deep, int mvt)
 {
-	char	c;
 	int	rec_res;
 
-	if (x >= map->size || x - begin_x >= deep || y - begin_y >= deep  ||  y >= map->size || y < 0 || x < 0 || cells[y][x])
+	if (deep >= map->size || x >= map->size || x - begin_x >= deep || y - begin_y >= deep  ||  y >= map->size || y < 0 || x < 0 || !cells[y][x])
 		return (0);
-	else
+	else if (mvt == 0)
 	{
-		c = cells[y][x];
-		if (c < 1)
-			return (0);
-		else if (y == begin_y) // we are going right
+		rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x + 1, y,  map, deep, 0);
+		if (rec_res)
+			return (1 + rec_res);
+		else
 		{
-			// we try to continue on the right
-			rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x + 1, y,  map, deep);
-			// if we can we continue
+			rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x, y - 1, map, deep, 1);
 			if (rec_res)
-				return (1 + rec_res);
-			// else we try to go bottom
-			else
-			{
-				rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x, y - 1, map, deep);
-				if (rec_res)
-					return (1 +  rec_res);
-			}
+				return (rec_res + 1);
 		}
-		else if (x - begin_x >= y) // we are going down 
+	}
+	else if (mvt == 1) 
+	{
+		rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x, y + 1,  map, deep, 1);
+		if (rec_res)
+			return (1 + rec_res);
+		else
 		{
-			// we try to continue on the down
-			rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x, y + 1,  map, deep);
-			// if we can we continue
+			rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x - 1, y, map, deep, 2);
 			if (rec_res)
-				return (1 + rec_res);
-			// else we try to go left
-			else
-			{
-				rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x - 1, y, map, deep);
-				if (rec_res)
-					return (1  +  rec_res);
-			}
+				return (1  +  rec_res);
 		}
-		else if (x - begin_x >= begin_x) // we are going left
+	}
+	else if (mvt == 2) 
+	{
+		rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x - 1, y,  map, deep, 2);
+		if (rec_res)
+			return (1 + rec_res);
+		else
 		{
-			// we try to continue on the right
-			rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x - 1, y,  map, deep);
-			// if we can we continue
-			if (rec_res)
-				return (1 + rec_res);
-			// else returns
-			else
-			{
-				// else we go deeper
-				return (1 + reccursive_sqr_findr(cells, begin_x, begin_y, x + (begin_x - x), y, map, deep + 1));
-			}
+			rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, begin_x, begin_y,  map, deep + 1, 0);
+			return (rec_res + 1);
 		}
 	}
 	return (0);
@@ -127,10 +111,14 @@ int		ft_display_map(char *map_buffer, t_map *map)
 {
 	int	i;	
 	int	c;
-	short	map_cells[map->size][map->size];
+	short	**map_cells;
+	//short	map_cells[map->size][map->size];
 	int	x;
 	int	y;
-
+	map_cells = malloc(sizeof(short*) * map->size);
+	y = 0;
+	while ( y < map->size)
+		map_cells[y++] = malloc(sizeof(short) * map->size);
 	y = 0;
 	x = 0;
 	i = 0;
@@ -151,7 +139,7 @@ int		ft_display_map(char *map_buffer, t_map *map)
 	{
 		while(map_buffer[++i] != '\n')
 			;
-		while (map_buffer[++i])
+		while (map_buffer[++i] && y < map->size)
 		{
 			if ((x >  map->size - 1))
 			{
@@ -165,13 +153,16 @@ int		ft_display_map(char *map_buffer, t_map *map)
 			}
 		}
 	}
-
+	
 	y = 0;
 	while (y < map->size)
 	{
 		x = 0;
 		while (x < map->size)
-			printf("%i", map_cells[y][x++]);
+		{
+			printf("%i\n", reccursive_sqr_findr(map_cells, x, y, x, y, map, 1, 0) / 3);
+			x += 1;
+		}
 		printf("\n");
 		y += 1;
 	}
