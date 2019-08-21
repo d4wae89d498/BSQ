@@ -149,24 +149,31 @@ int		ft_display_map(char *map_buffer, t_map *map)
 	}
 	else
 	{
-		while (map_buffer[i])
+		while(map_buffer[++i] != '\n')
+			;
+		while (map_buffer[++i])
 		{
-			if ((x == map->size - 1) && map_buffer[i] == '\n')
+			if ((x >  map->size - 1))
 			{
 				x = 0;
 				y += 1;
 			}
-			else if (x > map->size)
-			 	return (0);
 			else 
 			{	
-				c = ft_case(map_buffer[i], map);
-				if (c >= 0)
-					map_cells[y][x++] = c;
-				else
-					return (1);
+				map_cells[y][x] = ft_case(map_buffer[i], map);
+				x += 1;
 			}
 		}
 	}
-	return (0);
+
+	y = 0;
+	while (y < map->size)
+	{
+		x = 0;
+		while (x < map->size)
+			printf("%i", map_cells[y][x++]);
+		printf("\n");
+		y += 1;
+	}
+	return (1);
 }
