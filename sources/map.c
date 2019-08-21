@@ -6,14 +6,13 @@
 /*   By: fdumas <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/21 19:16:26 by fdumas       #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 23:24:12 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 23:27:00 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdio.h>
 #include "./../includes/map.h"
 #include "./../includes/square.h"
 #include "./../includes/stdio.h"
@@ -26,7 +25,7 @@ int			ft_fill_map(char *map_buffer, t_map *map)
 	int	number_size;
 	int	number;
 	int	y;
-
+	
 	number_size = 0;
 	number = 0;
 	map->side = 0;
@@ -46,7 +45,6 @@ int			ft_fill_map(char *map_buffer, t_map *map)
 	y = i + 3;
 	while (map_buffer[++y] != '\n')
 		map->side += 1;
-	printf("\n");
 	map->size = number;
 	map->empty = map_buffer[i];
 	map->obstacle = map_buffer[i + 1];

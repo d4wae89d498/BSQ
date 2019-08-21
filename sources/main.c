@@ -6,7 +6,7 @@
 /*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/19 13:25:24 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 23:13:37 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 23:30:01 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,6 @@
 #include "./../includes/string.h"
 #include "./../includes/stdio.h"
 #include "./../includes/map.h"
-#include <stdio.h>
 
 int				parse_map(char *map_path)
 {
@@ -62,6 +61,8 @@ int				main(int argc, char **argv)
 		i = 1;
 		while (i < argc)
 		{
+			if (i != 1)
+				write(1, "\n", 1);
 			map_path = ft_strdup(argv[i]);
 			exit_code = exit_code || parse_map(map_path);
 			i += 1;
