@@ -6,7 +6,7 @@
 /*   By: fdumas <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/21 19:16:26 by fdumas       #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 23:27:00 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 23:39:36 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,39 +18,7 @@
 #include "./../includes/stdio.h"
 #include "./../includes/string.h"
 #include "./../includes/map_utils.h"
-
-int			ft_fill_map(char *map_buffer, t_map *map)
-{
-	int	i;
-	int	number_size;
-	int	number;
-	int	y;
-	
-	number_size = 0;
-	number = 0;
-	map->side = 0;
-	i = 0;
-	while (map_buffer[i] && ft_is_number(map_buffer[i]))
-	{
-		number += map_buffer[i] - '0';
-		if (ft_is_number(map_buffer[i + 1]))
-			number *= 10;
-		number_size += 1;
-		i += 1;
-	}
-	if (number_size == 0)
-		return (0);
-	if (map_buffer[i + 3] != '\n')
-		return (0);
-	y = i + 3;
-	while (map_buffer[++y] != '\n')
-		map->side += 1;
-	map->size = number;
-	map->empty = map_buffer[i];
-	map->obstacle = map_buffer[i + 1];
-	map->full = map_buffer[i + 2];
-	return (1);
-}
+#include "./../includes/map_o.h"
 
 t_square	*find_sq(short **cells, t_map *map)
 {
