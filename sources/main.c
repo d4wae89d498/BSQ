@@ -6,7 +6,7 @@
 /*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/19 13:25:24 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 19:15:57 by fdumas      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 22:54:57 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -65,6 +65,7 @@ int				main(int argc, char **argv)
 			map_path = ft_strdup(argv[i]);
 			exit_code = exit_code || parse_map(map_path);
 			i += 1;
+			write(1, "\n", 1);
 		}
 	}
 	return (exit_code);

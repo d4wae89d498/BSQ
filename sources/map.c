@@ -6,13 +6,14 @@
 /*   By: fdumas <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/21 19:16:26 by fdumas       #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 22:14:00 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 23:11:55 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdio.h>
 #include "./../includes/map.h"
 #include "./../includes/square.h"
 #include "./../includes/stdio.h"
@@ -24,9 +25,11 @@ int			ft_fill_map(char *map_buffer, t_map *map)
 	int	i;
 	int	number_size;
 	int	number;
+	int	y;
 
 	number_size = 0;
 	number = 0;
+	map->side = 0;
 	i = 0;
 	while (map_buffer[i] && ft_is_number(map_buffer[i]))
 	{
@@ -40,6 +43,10 @@ int			ft_fill_map(char *map_buffer, t_map *map)
 		return (0);
 	if (map_buffer[i + 3] != '\n')
 		return (0);
+	y = i + 3;
+	while (map_buffer[++y] != '\n')
+		map->side += 1;
+	printf("\n");
 	map->size = number;
 	map->empty = map_buffer[i];
 	map->obstacle = map_buffer[i + 1];
@@ -93,7 +100,7 @@ short		**ft_init_cells(char *map_buffer, t_map *map)
 		;
 	while (map_buffer[++i] && y < map->size)
 	{
-		if (x > map->size - 1 && ++y)
+		if (x > map->side - 1 && ++y)
 			x = 0;
 		else if (map_buffer[i] != map->empty && map_buffer[i] != map->obstacle)
 			return (0);
@@ -134,7 +141,7 @@ int			ft_display_map(char *map_buffer, t_map *map)
 	while (++i < map->size)
 	{
 		j = -1;
-		while (++j < map->size)
+		while (++j < map->side)
 			if (i >= out->y && j >= out->x
 					&& i <= (out->y + out->l) && j <= (out->x + out->l))
 				ft_putchar(map->full);
