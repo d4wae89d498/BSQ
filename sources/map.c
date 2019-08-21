@@ -6,7 +6,7 @@
 /*   By: fdumas <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/21 19:16:26 by fdumas       #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 23:11:55 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 23:24:12 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -82,6 +82,13 @@ t_square	*find_sq(short **cells, t_map *map)
 	return (sq);
 }
 
+void		init_me(int *a, int *b, int *c)
+{
+	*a = 0;
+	*b = 0;
+	*c = 0;
+}
+
 short		**ft_init_cells(char *map_buffer, t_map *map)
 {
 	int			i;
@@ -93,15 +100,16 @@ short		**ft_init_cells(char *map_buffer, t_map *map)
 	y = -1;
 	while (y < map->size)
 		map_cells[y++] = malloc(sizeof(short) * map->size);
-	y = 0;
-	x = 0;
-	i = 0;
+	init_me(&i, &y, &x);
 	while (map_buffer[++i] != '\n')
 		;
 	while (map_buffer[++i] && y < map->size)
 	{
 		if (x > map->side - 1 && ++y)
-			x = 0;
+			if (map_buffer[i] != '\n')
+				return (0);
+			else
+				x = 0;
 		else if (map_buffer[i] != map->empty && map_buffer[i] != map->obstacle)
 			return (0);
 		else
