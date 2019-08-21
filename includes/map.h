@@ -17,16 +17,17 @@
 
 typedef struct	s_map
 {
-	int			l;
+	int		size;
 	char		empty;
 	char		full;
-	char		biggest_square;
+	char		obstacle;
 
+	int		**cells;
 	t_square	**squares;
+	int		biggest_index;
 }				t_map;
 
-t_map			*ft_fill_map(char *map_buffer);
-t_square		*ft_find_biggest_square(t_map *map);
-void			ft_display_map(t_map	*map, t_square *biggest_square);
+int			ft_fill_map(char *map_buffer, t_map *map);
 
+int			ft_display_map(char *map_buffer, t_map *map);
 #endif

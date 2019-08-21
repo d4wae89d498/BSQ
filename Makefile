@@ -21,6 +21,9 @@ R&FLAGS = rm -rf
 all:
 	$(M) fclean && $(M) norme && $(CC&FLAGS) includes/*.h  sources/*.c  && mv $(OEXEC) $(EXEC) && $(M) run
 
+home:
+	$(M) fclean && $(CC&FLAGS) includes/*.h  sources/*.c  && mv $(OEXEC) $(EXEC) && $(M) run
+
 sanitize:
 	$(CC&FLAGS) -g3 -fsanitize=address includes/*.h  sources/*.c && mv $(OEXEC) $(EXEC)
 

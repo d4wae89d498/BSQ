@@ -18,58 +18,54 @@
 #include "./../includes/map.h"
 #include <stdio.h>
 
-char	*g_default_map = "./maps/00.txt";
-
 int		parse_map(char *map_path)
 {
 	char		*map_file_buffer;
-	t_map		*map;
-	t_square	*biggest_square;
+	t_map		map;
+	int		exit_code;
 
+	exit_code = 0;
 	map_file_buffer = ft_read_file(map_path);
+	free(map_path);
 	if (map_file_buffer > 0)
 	{
-		map = ft_fill_map(map_file_buffer);
-		biggest_square = ft_find_biggest_square(map);
-		ft_display_map(map, biggest_square);
+		if(!ft_fill_map(map_file_buffer, &map) && ++exit_code)
+			write(1, "map error\n", 10);
+		if (!exit_code)
+			if (!ft_display_map(map_file_buffer, &map) && ++exit_code)
+				write(1, "map error\n", 10);
 		free(map_file_buffer);
-		return (0);
 	}
 	else
 	{
-		write(1, "Error - Unable to find given map file [", 39);
-		ft_putstr(map_path);
-		write(1, "]\n", 2);
-		return (1);
+		write(1, "map error\n", 10);
+		exit_code = 1;
 	}
-	free(map_path);
+	return (exit_code);
 }
 
 int		main(int argc, char **argv)
 {
-	char	*map_path;
-	int		success;
+	char		*map_path;
+	int		exit_code;
+	int		i;
 
+	exit_code = 0;
 	map_path = 0;
 	if (argc == 1)
 	{
-		write(1, "Please enter your map path [press x for default: ", 49);
-		ft_putstr(g_default_map);
-		write(1, "]\n", 2);
 		map_path = ft_read_input(10, STDIN_FILENO);
-		if (*map_path == 'x' && map_path[1] == '\0')
-		{
-			free(map_path);
-			map_path = ft_strdup(g_default_map);
-		}
+		exit_code = exit_code || parse_map(map_path);
 	}
-	else if (argc == 2)
-		map_path = ft_strdup(argv[1]);
 	else
 	{
-		write(1, "Error - Invalid argument numbers.\n", 34);
-		return (1);
+		i = 1;
+		while (i < argc)
+		{
+			map_path = ft_strdup(argv[i]);
+			exit_code = exit_code || parse_map(map_path);
+			i += 1;
+		}
 	}
-	success = parse_map(map_path);
-	return (success);
+	return (exit_code);
 }
