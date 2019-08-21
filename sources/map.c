@@ -52,7 +52,7 @@ int	ft_fill_map(char *map_buffer, t_map *map)
 
 int		ft_is_case(char c, t_map *map)
 {
-	return (c == map->empty ||c  == map->obstacle);
+	return (c == map->empty || c  == map->obstacle);
 }
 
 int		ft_case(char c, t_map *map)
@@ -63,31 +63,64 @@ int		ft_case(char c, t_map *map)
 		return (c == map->empty);
 }
 
-int		reccursive_sqr_findr(short **cells, int begin_x, int begin_y, int x, int y, t_map *map)
+int		reccursive_sqr_findr(short **cells, int begin_x, int begin_y, int x, int y, t_map *map, int deep)
 {
 	char	c;
-	int	size;
+	int	rec_res;
 
-	size = 0;
-	if (x >= map->size || y >= map->size || y < 0 || x < 0)
-		return (size);
+	if (x >= map->size || x - begin_x >= deep || y - begin_y >= deep  ||  y >= map->size || y < 0 || x < 0 || cells[y][x])
+		return (0);
 	else
 	{
 		c = cells[y][x];
 		if (c < 1)
+			return (0);
+		else if (y == begin_y) // we are going right
 		{
-			// can we go right ?
-
-			// can we got bottom ?
-
-			// can we go left ?
-			return (size);
+			// we try to continue on the right
+			rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x + 1, y,  map, deep);
+			// if we can we continue
+			if (rec_res)
+				return (1 + rec_res);
+			// else we try to go bottom
+			else
+			{
+				rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x, y - 1, map, deep);
+				if (rec_res)
+					return (1 +  rec_res);
+			}
 		}
-		else 
+		else if (x - begin_x >= y) // we are going down 
 		{
-			return (++size + reccursive_sqr_findr(cells, begin_x, begin_y, x, y,  map));
+			// we try to continue on the down
+			rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x, y + 1,  map, deep);
+			// if we can we continue
+			if (rec_res)
+				return (1 + rec_res);
+			// else we try to go left
+			else
+			{
+				rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x - 1, y, map, deep);
+				if (rec_res)
+					return (1  +  rec_res);
+			}
+		}
+		else if (x - begin_x >= begin_x) // we are going left
+		{
+			// we try to continue on the right
+			rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x - 1, y,  map, deep);
+			// if we can we continue
+			if (rec_res)
+				return (1 + rec_res);
+			// else returns
+			else
+			{
+				// else we go deeper
+				return (1 + reccursive_sqr_findr(cells, begin_x, begin_y, x + (begin_x - x), y, map, deep + 1));
+			}
 		}
 	}
+	return (0);
 }
 
 int		ft_display_map(char *map_buffer, t_map *map)
