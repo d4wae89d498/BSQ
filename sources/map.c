@@ -6,7 +6,7 @@
 /*   By: fdumas <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/21 19:16:26 by fdumas       #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 21:00:08 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 21:48:59 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -120,54 +120,41 @@ t_square	*find_sq(short **cells, t_map *map)
 	return (sq);
 }
 
-int			ft_display_map(char *map_buffer, t_map *map)
+short		**ft_init_cells(char *map_buffer, t_map *map)
 {
 	int			i;
-	int			c;
 	short		**map_cells;
-	short		**map_clone;
-	t_square	*out;
 	int			x;
 	int			y;
-	int			j;
 
 	map_cells = malloc(sizeof(short*) * map->size);
-	y = 0;
+	y = -1;
 	while (y < map->size)
 		map_cells[y++] = malloc(sizeof(short) * map->size);
 	y = 0;
 	x = 0;
 	i = 0;
-	if (!map_buffer)
+	while (map_buffer[++i] != '\n')
+		;
+	while (map_buffer[++i] && y < map->size)
 	{
-		return (0);
-	}
-	else if (!map_buffer[i + 1])
-	{
-		c = ft_case(map_buffer[i], map);
-		if (c == -1)
-			return (0);
+		if (x > map->size - 1 && ++y)
+			x = 0;
 		else
-			map_cells[y][x] = c;
+			map_cells[y][x++] = map_buffer[i] == map->empty;
 	}
-	else
-	{
-		while (map_buffer[++i] != '\n')
-			;
-		while (map_buffer[++i] && y < map->size)
-		{
-			if (x > map->size - 1)
-			{
-				x = 0;
-				y += 1;
-			}
-			else
-			{
-				map_cells[y][x] = map_buffer[i] == map->empty;
-				x += 1;
-			}
-		}
-	}
+	return (map_cells);
+}
+
+int			ft_display_map(char *map_buffer, t_map *map)
+{
+	int			i;
+	short		**map_cells;
+	short		**map_clone;
+	int			j;
+	t_square	*out;
+
+	map_cells = ft_init_cells(map_buffer, map);
 	map_clone = clone(map_cells, map);
 	out = find_sq(map_clone, map);
 	printf("largest square was: %i x=%i y=%i \n", out->l, out->x, out->y);
@@ -176,7 +163,8 @@ int			ft_display_map(char *map_buffer, t_map *map)
 	{
 		j = -1;
 		while (++j < map->size)
-			if (i >= out->y && j >= out->x && i <= (out->y + out->l) && j <= (out->x + out->l))
+			if (i >= out->y && j >= out->x
+					&& i <= (out->y + out->l) && j <= (out->x + out->l))
 				ft_putchar(map->full);
 			else
 				ft_putchar(map_cells[i][j] ? map->empty : map->obstacle);
