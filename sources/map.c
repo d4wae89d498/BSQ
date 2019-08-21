@@ -6,12 +6,11 @@
 /*   By: fdumas <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/21 19:16:26 by fdumas       #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 21:58:16 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 22:04:58 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "./../includes/map.h"
@@ -97,6 +96,8 @@ short		**ft_init_cells(char *map_buffer, t_map *map)
 	{
 		if (x > map->size - 1 && ++y)
 			x = 0;
+		else if (map_buffer[i] != map->empty && map_buffer[i] != map->obstacle)
+			return (0);
 		else
 			map_cells[y][x++] = map_buffer[i] == map->empty;
 	}
@@ -112,11 +113,12 @@ int			ft_display_map(char *map_buffer, t_map *map)
 	t_square	*out;
 
 	map_cells = ft_init_cells(map_buffer, map);
+	if (!map_cells)
+		return (0);
 	map_clone = clone(map_cells, map);
 	out = find_sq(map_clone, map);
-	printf("largest square was: %i x=%i y=%i \n", out->l, out->x, out->y);
-	i = 0;
-	while (i < map->size)
+	i = -1;
+	while (++i < map->size)
 	{
 		j = -1;
 		while (++j < map->size)
@@ -125,7 +127,6 @@ int			ft_display_map(char *map_buffer, t_map *map)
 				ft_putchar(map->full);
 			else
 				ft_putchar(map_cells[i][j] ? map->empty : map->obstacle);
-		i += 1;
 		write(1, "\n", 1);
 	}
 	return (1);
