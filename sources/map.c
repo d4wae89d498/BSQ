@@ -6,7 +6,7 @@
 /*   By: fdumas <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/21 19:16:26 by fdumas       #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 19:24:29 by fdumas      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 21:00:08 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,14 +19,12 @@
 #include "./../includes/stdio.h"
 #include "./../includes/string.h"
 
-int		ft_fill_map(char *map_buffer, t_map *map)
+int			ft_fill_map(char *map_buffer, t_map *map)
 {
-	int	exit_code;
 	int	i;
 	int	number_size;
 	int	number;
 
-	exit_code = 0;
 	number_size = 0;
 	number = 0;
 	i = 0;
@@ -50,12 +48,12 @@ int		ft_fill_map(char *map_buffer, t_map *map)
 	return (1);
 }
 
-int		ft_is_case(char c, t_map *map)
+int			ft_is_case(char c, t_map *map)
 {
 	return (c == map->empty || c == map->obstacle);
 }
 
-int		ft_case(char c, t_map *map)
+int			ft_case(char c, t_map *map)
 {
 	if (!ft_is_case(c, map))
 		return (-1);
@@ -65,9 +63,9 @@ int		ft_case(char c, t_map *map)
 
 short		**clone(short **cells, t_map *map)
 {
-	short 	**cells_out;
-	int	i;
-	int	j;
+	short		**cells_out;
+	int			i;
+	int			j;
 
 	i = 0;
 	cells_out = malloc(map->size * sizeof(short*));
@@ -77,32 +75,31 @@ short		**clone(short **cells, t_map *map)
 		j = 0;
 		while (j < map->size)
 		{
-			cells_out[i][j]= cells[i][j];
+			cells_out[i][j] = cells[i][j];
 			j += 1;
 		}
 		i += 1;
 	}
-	return cells_out;
+	return (cells_out);
 }
 
 short		min(short a, short b, short c)
 {
 	if (a <= b && a <= c)
-		return a;
+		return (a);
 	else if (b <= a && b <= c)
-		return b;
-	return c;
+		return (b);
+	return (c);
 }
 
-t_square 	*find_sq(short **cells, t_map *map)
+t_square	*find_sq(short **cells, t_map *map)
 {
-
 	t_square	*sq;
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	j = 0;
-	sq = ft_create_square(0,0,0);;
+	sq = ft_create_square(0, 0, 0);
 	while (j < map->size)
 	{
 		i = -1;
@@ -123,19 +120,20 @@ t_square 	*find_sq(short **cells, t_map *map)
 	return (sq);
 }
 
-int				ft_display_map(char *map_buffer, t_map *map)
+int			ft_display_map(char *map_buffer, t_map *map)
 {
-	int			i;	
+	int			i;
 	int			c;
 	short		**map_cells;
 	short		**map_clone;
 	t_square	*out;
 	int			x;
 	int			y;
+	int			j;
 
 	map_cells = malloc(sizeof(short*) * map->size);
 	y = 0;
-	while ( y < map->size)
+	while (y < map->size)
 		map_cells[y++] = malloc(sizeof(short) * map->size);
 	y = 0;
 	x = 0;
@@ -143,7 +141,7 @@ int				ft_display_map(char *map_buffer, t_map *map)
 	if (!map_buffer)
 	{
 		return (0);
-	} 
+	}
 	else if (!map_buffer[i + 1])
 	{
 		c = ft_case(map_buffer[i], map);
@@ -151,21 +149,20 @@ int				ft_display_map(char *map_buffer, t_map *map)
 			return (0);
 		else
 			map_cells[y][x] = c;
-
 	}
 	else
 	{
-		while(map_buffer[++i] != '\n')
+		while (map_buffer[++i] != '\n')
 			;
 		while (map_buffer[++i] && y < map->size)
 		{
-			if ((x >  map->size - 1))
+			if (x > map->size - 1)
 			{
 				x = 0;
 				y += 1;
 			}
-			else 
-			{	
+			else
+			{
 				map_cells[y][x] = map_buffer[i] == map->empty;
 				x += 1;
 			}
@@ -174,9 +171,7 @@ int				ft_display_map(char *map_buffer, t_map *map)
 	map_clone = clone(map_cells, map);
 	out = find_sq(map_clone, map);
 	printf("largest square was: %i x=%i y=%i \n", out->l, out->x, out->y);
-
 	i = 0;
-	int j;
 	while (i < map->size)
 	{
 		j = -1;
