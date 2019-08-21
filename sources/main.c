@@ -6,7 +6,7 @@
 /*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/19 13:25:24 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/20 19:29:51 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 19:15:57 by fdumas      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,18 +18,18 @@
 #include "./../includes/map.h"
 #include <stdio.h>
 
-int		parse_map(char *map_path)
+int				parse_map(char *map_path)
 {
 	char		*map_file_buffer;
 	t_map		map;
-	int		exit_code;
+	int			exit_code;
 
 	exit_code = 0;
 	map_file_buffer = ft_read_file(map_path);
 	free(map_path);
 	if (map_file_buffer > 0)
 	{
-		if(!ft_fill_map(map_file_buffer, &map) && ++exit_code)
+		if (!ft_fill_map(map_file_buffer, &map) && ++exit_code)
 			write(1, "map error\n", 10);
 		if (!exit_code)
 			if (!ft_display_map(map_file_buffer, &map) && ++exit_code)
@@ -44,11 +44,11 @@ int		parse_map(char *map_path)
 	return (exit_code);
 }
 
-int		main(int argc, char **argv)
+int				main(int argc, char **argv)
 {
 	char		*map_path;
-	int		exit_code;
-	int		i;
+	int			exit_code;
+	int			i;
 
 	exit_code = 0;
 	map_path = 0;

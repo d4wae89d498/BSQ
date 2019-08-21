@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   map.c	                                      .::    .:/ .      .::   */
+/*   map.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: mfaussur <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: fdumas <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/08/20 18:37:14 by mfaussur     #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/20 20:23:23 by hmarlin     ###    #+. /#+    ###.fr     */
+/*   Created: 2019/08/21 19:16:26 by fdumas       #+#   ##    ##    #+#       */
+/*   Updated: 2019/08/21 19:24:29 by fdumas      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@
 #include "./../includes/stdio.h"
 #include "./../includes/string.h"
 
-int	ft_fill_map(char *map_buffer, t_map *map)
+int		ft_fill_map(char *map_buffer, t_map *map)
 {
 	int	exit_code;
 	int	i;
@@ -40,7 +40,7 @@ int	ft_fill_map(char *map_buffer, t_map *map)
 	}
 	if (number_size == 0)
 		return (0);
-	if(map_buffer[i + 3] != '\n')
+	if (map_buffer[i + 3] != '\n')
 		return (0);
 	map->size = number;
 	map->empty = map_buffer[i];
@@ -52,7 +52,7 @@ int	ft_fill_map(char *map_buffer, t_map *map)
 
 int		ft_is_case(char c, t_map *map)
 {
-	return (c == map->empty || c  == map->obstacle);
+	return (c == map->empty || c == map->obstacle);
 }
 
 int		ft_case(char c, t_map *map)
@@ -123,15 +123,15 @@ t_square 	*find_sq(short **cells, t_map *map)
 	return (sq);
 }
 
-int		ft_display_map(char *map_buffer, t_map *map)
+int				ft_display_map(char *map_buffer, t_map *map)
 {
-	int		i;	
-	int		c;
+	int			i;	
+	int			c;
 	short		**map_cells;
 	short		**map_clone;
 	t_square	*out;
-	int		x;
-	int		y;
+	int			x;
+	int			y;
 
 	map_cells = malloc(sizeof(short*) * map->size);
 	y = 0;
