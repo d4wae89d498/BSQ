@@ -6,7 +6,7 @@
 /*   By: fdumas <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/21 19:16:26 by fdumas       #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 22:04:58 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 22:14:00 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,6 @@ int			ft_fill_map(char *map_buffer, t_map *map)
 	map->empty = map_buffer[i];
 	map->obstacle = map_buffer[i + 1];
 	map->full = map_buffer[i + 2];
-	map->biggest_index = -1;
 	return (1);
 }
 
@@ -104,6 +103,20 @@ short		**ft_init_cells(char *map_buffer, t_map *map)
 	return (map_cells);
 }
 
+void		free_me(t_map *map, short **cells1, short **cells2)
+{
+	int		i;
+
+	i = 0;
+	while (i < map->size)
+		free(cells1[i++]);
+	free(cells1);
+	i = 0;
+	while (i < map->size)
+		free(cells2[i++]);
+	free(cells2);
+}
+
 int			ft_display_map(char *map_buffer, t_map *map)
 {
 	int			i;
@@ -129,5 +142,6 @@ int			ft_display_map(char *map_buffer, t_map *map)
 				ft_putchar(map_cells[i][j] ? map->empty : map->obstacle);
 		write(1, "\n", 1);
 	}
+	free_me(map, map_cells, map_clone);
 	return (1);
 }
