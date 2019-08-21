@@ -63,58 +63,76 @@ int		ft_case(char c, t_map *map)
 		return (c == map->empty);
 }
 
-int		reccursive_sqr_findr(short **cells, int begin_x, int begin_y, int x, int y, t_map *map, int deep, int mvt)
+short		**clone(short **cells, t_map *map)
 {
-	int	rec_res;
+	short 	**cells_out;
+	int	i;
+	int	j;
 
-	if (deep >= map->size || x >= map->size || x - begin_x >= deep || y - begin_y >= deep  ||  y >= map->size || y < 0 || x < 0 || !cells[y][x])
-		return (0);
-	else if (mvt == 0)
+	i = 0;
+	cells_out = malloc(map->size * sizeof(short*));
+	while (i < map->size)
 	{
-		rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x + 1, y,  map, deep, 0);
-		if (rec_res)
-			return (1 + rec_res);
-		else
+		cells_out[i] = malloc(map->size * sizeof(short));
+		j = 0;
+		while (j < map->size)
 		{
-			rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x, y - 1, map, deep, 1);
-			if (rec_res)
-				return (rec_res + 1);
+			cells_out[i][j]= cells[i][j];
+			j += 1;
 		}
+		i += 1;
 	}
-	else if (mvt == 1) 
+	return cells_out;
+}
+
+short		min(short a, short b, short c)
+{
+	if (a <= b && a <= c)
+		return a;
+	else if (b <= a && b <= c)
+		return b;
+	return c;
+}
+
+t_square 	*find_sq(short **cells, t_map *map)
+{
+
+	t_square	*sq;
+	int		i;
+	int		j;
+
+	j = 0;
+	sq = ft_create_square(0,0,0);;
+	while (j < map->size)
 	{
-		rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x, y + 1,  map, deep, 1);
-		if (rec_res)
-			return (1 + rec_res);
-		else
+		i = -1;
+		while (cells[j][++i] != 0)
 		{
-			rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x - 1, y, map, deep, 2);
-			if (rec_res)
-				return (1  +  rec_res);
+			if (i == 0 || j == 0)
+				continue ;
+			else if (cells[j][i] != 0)
+			{
+				cells[j][i] = 1 + min(cells[j][i - 1],
+						cells[j - 1][i], cells[j - 1][i - 1]);
+				if (cells[j][i] > sq->l)
+					sq = ft_create_square(i, j, cells[j][i]);
+			}
 		}
+		j++;
 	}
-	else if (mvt == 2) 
-	{
-		rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, x - 1, y,  map, deep, 2);
-		if (rec_res)
-			return (1 + rec_res);
-		else
-		{
-			rec_res = reccursive_sqr_findr(cells, begin_x, begin_y, begin_x, begin_y,  map, deep + 1, 0);
-			return (rec_res + 1);
-		}
-	}
-	return (0);
+	return (sq);
 }
 
 int		ft_display_map(char *map_buffer, t_map *map)
 {
-	int	i;	
-	int	c;
-	short	**map_cells;
-	//short	map_cells[map->size][map->size];
-	int	x;
-	int	y;
+	int		i;	
+	int		c;
+	short		**map_cells;
+	short		**map_clone;
+	t_square	*out;
+	int		x;
+	int		y;
+
 	map_cells = malloc(sizeof(short*) * map->size);
 	y = 0;
 	while ( y < map->size)
@@ -133,7 +151,7 @@ int		ft_display_map(char *map_buffer, t_map *map)
 			return (0);
 		else
 			map_cells[y][x] = c;
-			
+
 	}
 	else
 	{
@@ -148,23 +166,27 @@ int		ft_display_map(char *map_buffer, t_map *map)
 			}
 			else 
 			{	
-				map_cells[y][x] = ft_case(map_buffer[i], map);
+				map_cells[y][x] = map_buffer[i] == map->empty;
 				x += 1;
 			}
 		}
 	}
-	
-	y = 0;
-	while (y < map->size)
+	map_clone = clone(map_cells, map);
+	out = find_sq(map_clone, map);
+	printf("largest square was: %i x=%i y=%i \n", out->l, out->x, out->y);
+
+	i = 0;
+	int j;
+	while (i < map->size)
 	{
-		x = 0;
-		while (x < map->size)
-		{
-			printf("%i\n", reccursive_sqr_findr(map_cells, x, y, x, y, map, 1, 0) / 3);
-			x += 1;
-		}
-		printf("\n");
-		y += 1;
+		j = -1;
+		while (++j < map->size)
+			if (i >= out->y && j >= out->x && i <= (out->y + out->l) && j <= (out->x + out->l))
+				ft_putchar(map->full);
+			else
+				ft_putchar(map_cells[i][j] ? map->empty : map->obstacle);
+		i += 1;
+		write(1, "\n", 1);
 	}
 	return (1);
 }
