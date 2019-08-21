@@ -6,7 +6,7 @@
 /*   By: fdumas <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/21 19:16:26 by fdumas       #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/21 21:48:59 by mfaussur    ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/08/21 21:58:16 by mfaussur    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,6 +18,7 @@
 #include "./../includes/square.h"
 #include "./../includes/stdio.h"
 #include "./../includes/string.h"
+#include "./../includes/map_utils.h"
 
 int			ft_fill_map(char *map_buffer, t_map *map)
 {
@@ -46,50 +47,6 @@ int			ft_fill_map(char *map_buffer, t_map *map)
 	map->full = map_buffer[i + 2];
 	map->biggest_index = -1;
 	return (1);
-}
-
-int			ft_is_case(char c, t_map *map)
-{
-	return (c == map->empty || c == map->obstacle);
-}
-
-int			ft_case(char c, t_map *map)
-{
-	if (!ft_is_case(c, map))
-		return (-1);
-	else
-		return (c == map->empty);
-}
-
-short		**clone(short **cells, t_map *map)
-{
-	short		**cells_out;
-	int			i;
-	int			j;
-
-	i = 0;
-	cells_out = malloc(map->size * sizeof(short*));
-	while (i < map->size)
-	{
-		cells_out[i] = malloc(map->size * sizeof(short));
-		j = 0;
-		while (j < map->size)
-		{
-			cells_out[i][j] = cells[i][j];
-			j += 1;
-		}
-		i += 1;
-	}
-	return (cells_out);
-}
-
-short		min(short a, short b, short c)
-{
-	if (a <= b && a <= c)
-		return (a);
-	else if (b <= a && b <= c)
-		return (b);
-	return (c);
 }
 
 t_square	*find_sq(short **cells, t_map *map)
